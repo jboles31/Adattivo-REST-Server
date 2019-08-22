@@ -23,15 +23,47 @@ var employeesSchema = mongoose.Schema({
 const Employees = mongoose.model('information', employeesSchema)
 
 var selectAll = (callback) => {
-  Employees.find({}).limit(1).exec((err, info) => {
+  Employees.find({Status: 'Active'}).exec((err, info) => {
     if(err) {
       callback(err, null);
     } else {
-      console.log('all employees in db', info);
       callback(null, info);
     }
   });
 };
+
+var selectByID = (param, callback) => {
+
+  Employees.find({ID: param}).exec((err, info) => {
+    if(err) {
+      callback(err, null);
+    } else if (info[0].Status === 'Active'){
+      callback(null, info);
+    }
+  })
+}
+
+var update = (params, callback) => {
+
+  Employees.findOneAndUpdate(filter, update, {new: true} ).exec((err, info) => {
+    if (err) {
+      callback(err, null)
+    } else {
+      callback(null, info)
+    }
+  })
+}
+
+var setInactive = (filter, callback) => {
+
+  Employees.findOneAndUpdate({ID: filter}, {Status: 'Inactive'}, {new: true}).exec((err, info) => {
+    if (err) {
+      callback(err, null)
+    } else {
+      callback(null, info)
+    }
+  })
+}
 
 // var insertEntry = (entry, callback) => {
 
@@ -66,6 +98,9 @@ var selectAll = (callback) => {
 
 module.exports = {
   selectAll,
+  selectByID,
+  update,
+  setInactive,
   // checkEntry,
   // insertEntry,
 };

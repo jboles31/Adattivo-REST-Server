@@ -6,35 +6,59 @@ import Create from './components/Create.jsx'
 import Delete from './components/Delete.jsx'
 import Update from './components/Update.jsx'
 import AllEmps from './components/AllEmps.jsx'
+import Display from './components/Display.jsx'
+import { runInThisContext } from 'vm';
 
 class App extends React.Component {
   constructor (props)  {
     super(props);
     this.state = {
-      employee: {},
+      input: '',
       employees: [],
+      updateEmp: {},
+      updateID: 0,
+      showDisplay: false,
     }
 
     this.searchByID = this.searchByID.bind(this);
     this.getAll = this.getAll.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleUpdate = this.handleUpdate.bind(this);
+    this.setDisplay = this.setDisplay.bind(this);
+    this.setUpdateID = this.setUpdateID.bind(this);
+    this.setInactive = this.setInactive.bind(this);
   }
 
-  searchByID(param) {
+  handleChange(event) {
+    this.setState({input: event.target.value});
+  }
+  
+  handleUpdate(param) {
+    this.setState({updateID: param});
+  }
+  
+  setDisplay() {
+    this.setState({
+      showDisplay: true
+    })
+  }
+
+  setUpdateID(id) {
+    this.setState({
+      updateID: id
+    })
+  }
+
+  searchByID() {
+    event.preventDefault()
     $.ajax({
       method: 'GET',
-      url: `/ID/${param}`, 
+      url: `/ID/${this.state.input}`, 
       success: (data) => {
         this.setState({
-          employee: {
-            ID: data.ID,
-            FirstName: data.FirstName,
-            MiddleInitial: data.MiddleInitial,
-            LastName: data.MiddleInitial,
-            DateOfBirth: data.DateOfBirth,
-            DateOfEmployement: data.DateOfEmployment,
-            Status: data.Status
-          }
-        })
+          employees: data,
+          showDisplay: true,
+      })
       },
       error: (err) => {
         console.log('error on Client', err);
@@ -57,14 +81,40 @@ class App extends React.Component {
     })
   }
 
+  update() {
+    $.ajax({
+      method: "POST",
+      url: "/update",
+      data: this.state.updateEmp
+      })
+      .done(() => {
+        this.getAll();
+      })
+  }
+
+  setInactive(id) {
+    console.log('delete clicked! id: ', id);
+    $.ajax({
+      method: "GET",
+      url: `/setInactive/${id}`,
+      })
+      .done(() => {
+        this.getAll();
+    })
+  }
+
+  componentDidMount() {
+    this.getAll();
+  }
+
   render () {
     return (
       <div className="app-wrapper">
-        <EmpID getAll={this.getAll} />
+        <EmpID search={this.searchByID} updateInput={this.handleChange}/>
         <Create />
-        <Update />
-        <Delete />
-        <AllEmps />
+        <Update handleUpdate={this.handleUpdate} getAll={this.getAll} />
+        <AllEmps getAll={this.getAll} setDisplay={this.setDisplay}/>
+        <Display employees={this.state.employees} showDisplay={this.state.showDisplay} updateID={this.state.updateID} setUpdateID={this.setUpdateID} setInactive={this.setInactive} />
       </div>
     )
   }

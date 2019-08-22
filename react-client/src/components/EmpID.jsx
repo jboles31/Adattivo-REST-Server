@@ -2,7 +2,11 @@ import React from 'react';
 
 const EmpID = (props) => (
   <div>
-    EmpID
+    Search By ID
+    <form onSubmit={() => props.search()}>
+      <input type="text" onChange={(e) => props.updateInput(e)}></input>
+      <button type='submit' onSubmit={() => props.search()}>Submit</button>
+    </form>
   </div>
 )
 

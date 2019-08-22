@@ -12,10 +12,32 @@ app.get('/getAll', (req, res) => {
     if (err) { res.sendStatus(404) }
     res.send(results)
   })
-  
+
 })
 
-mongoose.connect('mongodb://localhost/movies', {useNewUrlParser: true}, (err) => {
+app.get('/ID/:ID', (req, res) => {
+
+  db.selectByID(req.params.ID, (err, results) => {
+    if(err) { res.sendStatus(404) }
+    res.send(results) 
+  })
+
+})
+
+app.post('/update', (req, res) => {
+  console.log('update info in server', req.params)
+})
+
+app.get('/setInactive/:ID', (req, res) => {
+
+  db.setInactive(req.params.ID, (err, results) => {
+    if (err) { res.sendStatus(404) }
+    res.send(results)
+  })
+
+})
+
+mongoose.connect('mongodb://localhost/employees', {useNewUrlParser: true}, (err) => {
   if (err) { throw error }
   app.listen(3000, function() {
     console.log('listening on port 3000!');
