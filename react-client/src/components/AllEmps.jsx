@@ -2,7 +2,7 @@ import React from 'react';
 
 const AllEmps = (props) => (
   <div>
-    AllEmps
+    <button onClick={() => {props.getAll()}}>Get All Employees</button>
   </div>
 )
 

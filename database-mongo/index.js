@@ -20,7 +20,7 @@ var employeesSchema = mongoose.Schema({
   Status: String,
 })
 
-const Employees = mongoose.model('employees', employeesSchema)
+const Employees = mongoose.model('information', employeesSchema)
 
 var selectAll = (callback) => {
   Employees.find({}).limit(1).exec((err, info) => {
@@ -33,17 +33,17 @@ var selectAll = (callback) => {
   });
 };
 
-var insertEntry = (entry, callback) => {
+// var insertEntry = (entry, callback) => {
 
-  Employees.create({ID: entry.ID, FirstName: entry.FirstName, MIddleInitial: entry.MiddleInitial, LastName: entry.LastName, DateOfBirth: entry.DateOfBirth, DateOfEmployment: entry.DateOfEmployment, Status: entry.Status}, (err) => {
-    if (err) {
-      callback('err') 
-    } else {
-      console.log('saved to db')
-      callback();
-    }
-  })
-}
+//   Employees.create({ID: entry.ID, FirstName: entry.FirstName, MIddleInitial: entry.MiddleInitial, LastName: entry.LastName, DateOfBirth: entry.DateOfBirth, DateOfEmployment: entry.DateOfEmployment, Status: entry.Status}, (err) => {
+//     if (err) {
+//       callback('err') 
+//     } else {
+//       console.log('saved to db')
+//       callback();
+//     }
+//   })
+// }
 
 // var updateEntry = (entry, callback) => {
 
@@ -52,20 +52,20 @@ var insertEntry = (entry, callback) => {
 //   })
 // }
 
-var checkEntry = (entry, callback) => {
+// var checkEntry = (entry, callback) => {
 
-  Employees.find({ID: entry}, (err, info) => {
-      if (info.length === 0) {
-        callback('err', null)
-      } else {
-        console.log('info in DB', info);
-        callback(null, info)
-    }
-  })
-}
+//   Employees.find({ID: entry}, (err, info) => {
+//       if (info.length === 0) {
+//         callback('err', null)
+//       } else {
+//         console.log('info in DB', info);
+//         callback(null, info)
+//     }
+//   })
+// }
 
 module.exports = {
   selectAll,
-  checkEntry,
-  insertEntry,
+  // checkEntry,
+  // insertEntry,
 };

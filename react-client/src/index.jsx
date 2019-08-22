@@ -16,6 +16,7 @@ class App extends React.Component {
     }
 
     this.searchByID = this.searchByID.bind(this);
+    this.getAll = this.getAll.bind(this);
   }
 
   searchByID(param) {
@@ -59,7 +60,7 @@ class App extends React.Component {
   render () {
     return (
       <div className="app-wrapper">
-        <EmpID search={this.searchByID} />
+        <EmpID getAll={this.getAll} />
         <Create />
         <Update />
         <Delete />

@@ -12,7 +12,7 @@ app.get('/getAll', (req, res) => {
     if (err) { res.sendStatus(404) }
     res.send(results)
   })
-
+  
 })
 
 mongoose.connect('mongodb://localhost/movies', {useNewUrlParser: true}, (err) => {
