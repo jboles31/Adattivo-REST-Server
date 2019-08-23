@@ -32,32 +32,11 @@ const Display = (props) => {
                 <td>{employee.DateOfBirth}</td>
                 <td>{employee.DateOfEmployment}</td>
                 <td>{employee.Status}</td>
-                <td> 
-                  <button onClick={() => props.setUpdateID(employee.ID)}>Update</button>
-                </td>
                 <td>
                   <button onClick={() => props.setInactive(employee.ID)}>Delete</button>
                 </td>  
               </tr>
            );
-          } else {
-            result.push(
-              // <form>
-              //   <input type="text" onChange={(e) => props.updateInput(e)}>{employee.ID}</input>
-              //   <input type="text" onChange={(e) => props.updateInput(e)}>{employee.FirstName}</input>
-              //   <input type="text" onChange={(e) => props.updateInput(e)}>{employee.MiddleInitial}</input>
-              //   <input type="text" onChange={(e) => props.updateInput(e)}>{employee.LastName}</input>
-              //   <input type="text" onChange={(e) => props.updateInput(e)}>{employee.DateOfBirth}</input>
-              //   <input type="text" onChange={(e) => props.updateInput(e)}>{employee.DateOfEmployment}</input>
-              //   <input type="text" onChange={(e) => props.updateInput(e)}>{employee.Status}</input>
-              //   <div> 
-              //     <button onClick={() => props.setUpdateID(0)}>Update</button>
-              //   </div>
-              //   <div>
-              //     <button>Delete</button>
-              //   </div>  
-              // </form>
-            )
           }
         }
       })

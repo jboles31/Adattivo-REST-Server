@@ -28,7 +28,12 @@ app.get('/ID/:ID', (req, res) => {
 })
 
 app.post('/update', (req, res) => {
-  console.log('update info in server', req.params)
+  
+  db.update(req.body, (err, results) => {
+    if(err) { res.sendStatus(404) }
+    res.send(results)
+  })
+
 })
 
 app.get('/setInactive/:ID', (req, res) => {
@@ -41,7 +46,7 @@ app.get('/setInactive/:ID', (req, res) => {
 })
 
 app.post('/create', (req, res) => {
-  console.log('ran', req.body);
+
   db.createEmp(req.body, (err) => {
     if (err) { res.sendStatus(404) }
   })

@@ -23,7 +23,7 @@ var employeesSchema = mongoose.Schema({
 const Employees = mongoose.model('information', employeesSchema)
 
 var selectAll = (callback) => {
-  Employees.find({Status: 'Active'}).exec((err, info) => {
+  Employees.find({Status: 'ACTIVE'}).exec((err, info) => {
     if(err) {
       callback(err, null);
     } else {
@@ -37,7 +37,7 @@ var selectByID = (param, callback) => {
   Employees.find({ID: param}).exec((err, info) => {
     if(err) {
       callback(err, null);
-    } else if (info[0].Status === 'Active'){
+    } else if (info[0].Status === 'ACTIVE'){
       callback(null, info);
     }
   })
@@ -45,18 +45,18 @@ var selectByID = (param, callback) => {
 
 var update = (params, callback) => {
 
-  Employees.findOneAndUpdate(filter, update, {new: true} ).exec((err, info) => {
+  Employees.findOneAndUpdate({ID: params.ID}, {FirstName: params.FirstName, MiddleInitial: params.MiddleInitial, LastName: params.LastName, DateOfBirth: params.DateOfBirth, DateOfEmployment: params.DateOfEmployment}, {new: true} ).exec((err, info) => {
     if (err) {
       callback(err, null)
     } else {
-      callback(null, info)
+      callback(null, info);
     }
   })
 }
 
 var setInactive = (filter, callback) => {
 
-  Employees.findOneAndUpdate({ID: filter}, {Status: 'Inactive'}, {new: true}).exec((err, info) => {
+  Employees.findOneAndUpdate({ID: filter}, {Status: 'INACTIVE'}, {new: true}).exec((err, info) => {
     if (err) {
       callback(err, null)
     } else {
