@@ -4,11 +4,10 @@ const Display = (props) => {
 
   if (props.showDisplay === true) {
 
-
     const employeeGen = () => {
       let employeeContainer = [];
-  
       let result = [];
+
       result.push(
         <tr>
           <td>ID</td>
@@ -39,7 +38,7 @@ const Display = (props) => {
                 <td>
                   <button onClick={() => props.setInactive(employee.ID)}>Delete</button>
                 </td>  
-             </tr>
+              </tr>
            );
           } else {
             result.push(
@@ -62,7 +61,7 @@ const Display = (props) => {
           }
         }
       })
-      employeeContainer.push(<table>{result}</table>);
+      employeeContainer.push(<table><tbody>{result}</tbody></table>);
       return employeeContainer
     }
   

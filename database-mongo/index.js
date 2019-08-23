@@ -65,42 +65,21 @@ var setInactive = (filter, callback) => {
   })
 }
 
-// var insertEntry = (entry, callback) => {
+var createEmp = (data, callback) => {
 
-//   Employees.create({ID: entry.ID, FirstName: entry.FirstName, MIddleInitial: entry.MiddleInitial, LastName: entry.LastName, DateOfBirth: entry.DateOfBirth, DateOfEmployment: entry.DateOfEmployment, Status: entry.Status}, (err) => {
-//     if (err) {
-//       callback('err') 
-//     } else {
-//       console.log('saved to db')
-//       callback();
-//     }
-//   })
-// }
-
-// var updateEntry = (entry, callback) => {
-
-//   Employees.update({}, (err) => {
-//     if ()
-//   })
-// }
-
-// var checkEntry = (entry, callback) => {
-
-//   Employees.find({ID: entry}, (err, info) => {
-//       if (info.length === 0) {
-//         callback('err', null)
-//       } else {
-//         console.log('info in DB', info);
-//         callback(null, info)
-//     }
-//   })
-// }
+  Employees.create(data, (err, info) => {
+    if (err) {
+      callback(err, null)
+    } else {
+      callback(null, info);
+    }
+  })
+}
 
 module.exports = {
   selectAll,
   selectByID,
   update,
   setInactive,
-  // checkEntry,
-  // insertEntry,
+  createEmp,
 };

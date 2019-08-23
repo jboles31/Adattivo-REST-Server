@@ -3,11 +3,9 @@ import ReactDOM from 'react-dom'
 import $ from 'jquery'
 import EmpID from './components/EmpID.jsx'
 import Create from './components/Create.jsx'
-import Delete from './components/Delete.jsx'
 import Update from './components/Update.jsx'
 import AllEmps from './components/AllEmps.jsx'
 import Display from './components/Display.jsx'
-import { runInThisContext } from 'vm';
 
 class App extends React.Component {
   constructor (props)  {
@@ -18,6 +16,12 @@ class App extends React.Component {
       updateEmp: {},
       updateID: 0,
       showDisplay: false,
+      newEmp: {},
+      firstname: '',
+      middleinitial: '',
+      lastname: '',
+      DOB: '',
+      DOE: ''
     }
 
     this.searchByID = this.searchByID.bind(this);
@@ -27,10 +31,11 @@ class App extends React.Component {
     this.setDisplay = this.setDisplay.bind(this);
     this.setUpdateID = this.setUpdateID.bind(this);
     this.setInactive = this.setInactive.bind(this);
+    this.createEmp = this.createEmp.bind(this);
   }
 
   handleChange(event) {
-    this.setState({input: event.target.value});
+    this.setState({[event.target.name]: event.target.value});
   }
   
   handleUpdate(param) {
@@ -46,6 +51,14 @@ class App extends React.Component {
   setUpdateID(id) {
     this.setState({
       updateID: id
+    })
+  }
+
+  setNewEmp(info) {
+    this.setState({
+      newEmp: {
+
+      }
     })
   }
 
@@ -103,6 +116,30 @@ class App extends React.Component {
     })
   }
 
+  createEmp() {
+    console.log('createEmp ran')
+    event.preventDefault()
+    let data = {
+      ID: `${this.state.employees[this.state.employees.length - 1].ID + 1}`,
+      FirstName: `${this.state.firstname}`,
+      MiddleInitial: `${this.state.middleinitial}`,
+      LastName: `${this.state.lastname}`,
+      DateOfBirth: `${this.state.DOB}`,
+      DateOfEmplyment: `${this.state.DOE}`,
+      Status: 'Active'
+    }
+    let json = JSON.stringify(data)
+
+    $.ajax({
+      method: "POST",
+      url: "/create",
+      contentType: "application/json",
+      data: json,
+      }).done(
+        this.getAll()
+      )
+  }
+
   componentDidMount() {
     this.getAll();
   }
@@ -111,7 +148,7 @@ class App extends React.Component {
     return (
       <div className="app-wrapper">
         <EmpID search={this.searchByID} updateInput={this.handleChange}/>
-        <Create />
+        <Create employees={this.state.employees} createEmp={this.createEmp} handleChange={this.handleChange}/>
         <Update handleUpdate={this.handleUpdate} getAll={this.getAll} />
         <AllEmps getAll={this.getAll} setDisplay={this.setDisplay}/>
         <Display employees={this.state.employees} showDisplay={this.state.showDisplay} updateID={this.state.updateID} setUpdateID={this.setUpdateID} setInactive={this.setInactive} />

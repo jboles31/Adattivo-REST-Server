@@ -1,10 +1,13 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var db = require('../database-mongo/index');
+var bodyParser = require('body-parser');
 
 var app = express();
 
 app.use(express.static(__dirname + '/../react-client/dist'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/getAll', (req, res) => {
 
@@ -35,6 +38,13 @@ app.get('/setInactive/:ID', (req, res) => {
     res.send(results)
   })
 
+})
+
+app.post('/create', (req, res) => {
+  console.log('ran', req.body);
+  db.createEmp(req.body, (err) => {
+    if (err) { res.sendStatus(404) }
+  })
 })
 
 mongoose.connect('mongodb://localhost/employees', {useNewUrlParser: true}, (err) => {
