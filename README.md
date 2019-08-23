@@ -17,10 +17,6 @@ This is a web application that exposes REST operations for employees. The API is
 4. Run ``` npm start ``` to start the service
 5. Go to ``` localhost:3000 ``` to interact with the web application
 
-## Support
-
-If you run into any problems running or working with this application email me at
-``` jordanboles1@gmail.com ```
 
 
 
